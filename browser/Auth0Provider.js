@@ -256,6 +256,9 @@
         domain: options.domain,
         client_id: options.clientId,
         audience: options.audience,
+        authorizationParams: {
+          redirect_uri: options.redirectUri || options.redirect_uri
+        },
         redirect_uri: options.redirectUri || window.location.origin,
         useRefreshTokens: options.useRefreshTokens || false
       })
@@ -370,9 +373,9 @@
         if (authService.isAuthenticated) {
           return next()
         }
-        return instance.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
+        return instance.loginWithRedirect({ appState: { redirect_uri: to.fullPath } })
       } catch (e) {
-        return instance.loginWithRedirect({ appState: { targetUrl: to.fullPath } })
+        return instance.loginWithRedirect({ appState: { redirect_uri: to.fullPath } })
       }
     },
     decodeToken
